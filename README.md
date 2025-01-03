@@ -1,10 +1,11 @@
-**#CODES NOT ALLOWED TO BE USED WITHOUT THE CONSENT OF THE AUTHORS**
+**#CODE NOT ALLOWED TO BE USED WITHOUT THE CONSENT OF THE AUTHORS**
 **#XC-TDF Implementation on Egde_IIoT datset**
 
 # Required Libraries
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import tensorflow as tf
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
 from sklearn.model_selection import train_test_split
@@ -12,10 +13,10 @@ from tensorflow import keras
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, matthews_corrcoef
 from sklearn.ensemble import RandomForestClassifier
 from keras.models import Sequential
-from keras.layers import Dense
-import tensorflow as tf
-import time
 from keras.optimizers import Adam
+from keras.layers import Dense
+import time
+
 
 
 # Ensure the visualization settings from your initial setup
@@ -88,7 +89,7 @@ y = merged_df['Attack_type']
 rf_classifier = RandomForestClassifier(random_state=42)
 rf_classifier.fit(X, y)
 
-# Set the threshold to select the top 20 features
+# Set the threshold to select the top 21 features
 threshold = -np.sort(-rf_classifier.feature_importances_)[20]  # Get the importance of the 20th feature
 feature_selector = SelectFromModel(rf_classifier, threshold=threshold)
 feature_selector.fit(X, y)
@@ -114,10 +115,6 @@ scaler = StandardScaler()
 # Fit the scaler on the training data and transform both training and testing data
 X_train_scaled = scaler.fit_transform(X_train_selected)
 X_test_scaled = scaler.transform(X_test_selected)
-
-
-
-
 
 
 **#BASELINE DNN**
