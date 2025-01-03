@@ -7,6 +7,7 @@ import pandas as pd
 import seaborn as sns
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import time
 from scipy.stats import pearsonr
 from sklearn.model_selection import train_test_split
 from tensorflow import keras
@@ -15,7 +16,7 @@ from sklearn.ensemble import RandomForestClassifier
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.layers import Dense
-import time
+
 
 
 
@@ -24,6 +25,7 @@ plt.rcParams['figure.figsize'] = (8, 5.28)
 plt.rcParams["axes.labelsize"] = 12
 plt.rcParams["axes.titlesize"] = 13
 plt.rcParams["axes.titleweight"] = 600
+
 
 # Step 2: Load your dataset
 df1 = pd.read_csv('/content/Backdoor_attack.csv')
@@ -117,6 +119,7 @@ X_train_scaled = scaler.fit_transform(X_train_selected)
 X_test_scaled = scaler.transform(X_test_selected)
 
 
+
 **#BASELINE DNN**
 
 ann = tf.keras.models.Sequential()
@@ -159,8 +162,6 @@ print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
 print("Prediction Time:", prediction_time, "seconds")
-
-
 
 
 
@@ -243,10 +244,6 @@ print("Prediction Time:", end_time - start_time, "seconds")
 
 
 
-
-
-
-
 **#DNN ON NOISE AND ADVERSRIAL SAMPLES BASED ON CIGM**
 
 ann = tf.keras.models.Sequential()
@@ -265,7 +262,7 @@ start_time = time.time()
 
 # Define parameters
 epochs = 5
-epsilon = 0.07 # Adversrial perturbation magnitutde
+epsilon = 0.05 # Adversrial perturbation magnitutde
 noise_level = 0.05  # Noise level 
 
 # Compile the model
@@ -519,7 +516,7 @@ def controlled_iterative_gradient_method(original_samples, epsilon=0.1, iteratio
     return adversarial_samples
 
 # Original features for adversarial examples
-original_features = np.random.randn(600000, 21)  # Example data (600000 samples, 21 features)
+original_features = np.random.randn(400000, 21)  # Example data (600000 samples, 21 features)
 
 # Generating adversarial examples using FGSM
 start_time_fgsm = time.time()
